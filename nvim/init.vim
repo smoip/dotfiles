@@ -2,6 +2,8 @@ set nocompatible
 filetype off
 
 set rtp+=~/.config/nvim/bundle/Vundle.vim
+
+"""" Plugins
 call vundle#begin()
 
 " filetypes
@@ -18,7 +20,7 @@ Plugin 'wting/rust.vim'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'fatih/vim-go'
 
-" ui
+" interface
 Plugin 'scrooloose/nerdcommenter'
 
 call vundle#end()
@@ -42,12 +44,19 @@ set showmatch
 set number
 set omnifunc=syntaxcomplete#Complete
 
-" Plugin settings
+"""" Plugin settings
 let NERDSpaceDelims = 1               " space after comment char
 
-" Mapping
-:inoremap ( ()<Esc>i
-:inoremap [ []<Esc>i
-:inoremap { {}<Esc>i
-:inoremap " ""<Esc>i
-:inoremap ' ''<Esc>i
+"""" Mappings
+" auto insert closing character
+:imap ( ()<Esc>i
+:imap [ []<Esc>i
+:imap { {}<Esc>i
+:imap " ""<Esc>i
+:imap ' ''<Esc>i
+
+" shift-right arrow opens omnifunc completion menu
+:imap <S-Right> <C-x><Tab>
+
+" highight word under cursor w/space
+:nmap <space> viw
