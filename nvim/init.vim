@@ -21,7 +21,8 @@ Plugin 'chase/vim-ansible-yaml'
 Plugin 'fatih/vim-go'
 
 " interface
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'     " syntax-specific commenting
+Plugin 'tpope/vim-surround'           " parenthesis, brackets, tags, etc.
 
 call vundle#end()
 
@@ -52,11 +53,10 @@ let NERDSpaceDelims = 1               " space after comment char
 :imap ( ()<Esc>i
 :imap [ []<Esc>i
 :imap { {}<Esc>i
-:imap " ""<Esc>i
-:imap ' ''<Esc>i
 
 " shift-right arrow opens omnifunc completion menu
 :imap <S-Right> <C-x><Tab>
 
 " highight word under cursor w/space
 :nmap <space> viw
+
