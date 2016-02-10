@@ -19,6 +19,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'wting/rust.vim'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'fatih/vim-go'
+Plugin 'slim-template/vim-slim'
 
 " interface
 Plugin 'scrooloose/nerdcommenter'     " syntax-specific commenting
@@ -59,4 +60,8 @@ let NERDSpaceDelims = 1               " space after comment char
 
 " highight word under cursor w/space
 :nmap <space> viw
+
+" shift-del previous tab, del next tab
+:nmap <S-BS> gT
+:nmap <BS> gt
 
