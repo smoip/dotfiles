@@ -49,6 +49,9 @@ set omnifunc=syntaxcomplete#Complete
 """" Plugin settings
 let NERDSpaceDelims = 1               " space after comment char
 
+"""" Macros
+source $VIMRUNTIME/macros/matchit.vim      " not on by default for some reason
+
 """" Mappings
 " auto insert closing character
 :imap ( ()<Esc>i
@@ -61,7 +64,9 @@ let NERDSpaceDelims = 1               " space after comment char
 " highight word under cursor w/space
 :nmap <space> viw
 
-" shift-del previous tab, del next tab
-:nmap <S-BS> gT
-:nmap <BS> gt
+" = next tab, - prev tab
+:nmap - gT
+:nmap = gt
 
+" enter inserts space below, no insert mode
+:nmap <CR> o<ESC>
