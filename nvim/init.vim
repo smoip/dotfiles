@@ -2,9 +2,11 @@ set nocompatible
 filetype off
 
 set rtp+=~/.config/nvim/bundle/Vundle.vim
+set clipboard=unnamed                 " use system clipboard
 
 """" Plugins
 call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 
 " filetypes
 Plugin 'elzr/vim-json'
@@ -20,10 +22,14 @@ Plugin 'wting/rust.vim'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'fatih/vim-go'
 Plugin 'slim-template/vim-slim'
+Plugin 'othree/xml.vim'
 
 " interface
 Plugin 'scrooloose/nerdcommenter'     " syntax-specific commenting
 Plugin 'tpope/vim-surround'           " parenthesis, brackets, tags, etc.
+Plugin 'ctrlpvim/ctrlp.vim'           " fuzzy file finder
+Plugin 'simnalamburt/vim-mundo'       " visual undo tree
+
 
 call vundle#end()
 
