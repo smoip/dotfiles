@@ -1,3 +1,4 @@
+" probably lives at ~/.config/nvim/
 set nocompatible
 filetype off
 
