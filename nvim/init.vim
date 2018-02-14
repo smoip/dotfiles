@@ -21,15 +21,16 @@ Plugin 'tpope/vim-rails'
 Plugin 'wting/rust.vim'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'fatih/vim-go'
-Plugin 'slim-template/vim-slim'
+Plugin 'slim-template/vim-slim'       " god willing I will never need this...
 Plugin 'othree/xml.vim'
+Plugin 'posva/vim-vue'
 
 " interface
 Plugin 'scrooloose/nerdcommenter'     " syntax-specific commenting
 Plugin 'tpope/vim-surround'           " parenthesis, brackets, tags, etc.
 Plugin 'ctrlpvim/ctrlp.vim'           " fuzzy file finder
 Plugin 'simnalamburt/vim-mundo'       " visual undo tree
-
+Plugin 'haya14busa/incsearch.vim'
 
 call vundle#end()
 
