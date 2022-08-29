@@ -1,0 +1,30 @@
+#!/bin/zsh
+# script for starting up tmux work env
+# requires tmux, zsh, nvim
+
+session_name="workin_hard"
+base_dir="~/"
+general_pane="misc"
+startup_directories=("current_project_dir" "other_current_project_dir")
+
+function new_window()
+{
+  tmux new-window -t $session_name -n $2
+  tmux split-window -v -t $session_name:$2
+  tmux split-window -h -t $session_name:$2
+  tmux resize-pane -D 8
+  tmux set-window-option synchronize-panes
+  tmux send-keys -t $session_name:$2 "cd $1/$2" Enter
+  tmux send-keys -t $session_name:$2 "clear" Enter
+  tmux set-window-option synchronize-panes
+  tmux send-keys -t $session_name:$2.0 "nvim ." Enter
+}
+
+tmux new-session -d -s $session_name -n $general_pane
+tmux send-keys -t $session_name:$general_pane C-c # sometimes the first window chokes ¯\_(ツ)_/¯
+
+for dir in $startup_directories; do
+  new_window $base_dir $dir
+done
+
+tmux attach -t $session_name
