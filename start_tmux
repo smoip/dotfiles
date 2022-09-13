@@ -23,7 +23,7 @@ function new_window()
 tmux new-session -d -s $session_name -n $general_pane
 tmux send-keys -t $session_name:$general_pane C-c # sometimes the first window chokes ¯\_(ツ)_/¯
 
-for dir in $startup_directories; do
+for dir in ${startup_directories[@]}; do
   new_window $base_dir $dir
 done
 
