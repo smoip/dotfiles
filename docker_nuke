@@ -1,0 +1,20 @@
+#!/bin/zsh
+# shut it all down
+
+containers=$(docker ps -aq)
+images=$(docker images -aq)
+
+if [ $containers ]; then
+  echo "stfu"
+  docker rm $(docker ps -aq) -f
+else
+  echo "No containers to nuke :/"
+fi
+
+if [ $images ]; then
+  echo "gtfo"
+  docker rmi $(docker images -aq) -f
+else
+  echo "No images to nuke :/"
+fi
+
