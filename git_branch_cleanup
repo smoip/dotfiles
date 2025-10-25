@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "Error: Not in a git repository. Aborting."
+    exit 1
+fi
+
+echo "Git repository detected. Starting branch cleanup..."
+echo
+
+# Get all local branches, excluding the current branch indicator and remote tracking info
+branches=$(git branch --format='%(refname:short)' | grep -v -E '^(main|staging|production|hotfix)$')
+
+# Check if there are any branches to process
+if [ -z "$branches" ]; then
+    echo "No branches found to delete (excluding main, staging, production, hotfix)."
+    exit 0
+fi
+
+# Iterate through each branch
+for branch in $branches; do
+    echo "Branch: $branch"
+    read -p "Delete? [Y/n]: " response
+    
+    case $response in
+        [Yy]|[Yy][Ee][Ss]|"")
+            echo "Deleting branch '$branch'..."
+            if git branch -d "$branch" 2>/dev/null; then
+                echo "✓ Successfully deleted branch '$branch'"
+            else
+                echo "⚠ Branch '$branch' has unmerged changes. Use -D to force delete."
+                read -p "Force delete? [Y/n]: " force_response
+                case $force_response in
+                    [Yy]|[Yy][Ee][Ss]|"")
+                        git branch -D "$branch"
+                        echo "✓ Force deleted branch '$branch'"
+                        ;;
+                    *)
+                        echo "✗ Skipped deleting branch '$branch'"
+                        ;;
+                esac
+            fi
+            ;;
+        *)
+            echo "✗ Skipped branch '$branch'"
+            ;;
+    esac
+    echo
+done
+
+echo "Branch cleanup completed!"

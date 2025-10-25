@@ -9,36 +9,25 @@ set clipboard=unnamed                 " use system clipboard
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
-" filetypes
-Plugin 'elzr/vim-json'
-Plugin 'exu/pgsql.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'othree/html5.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'rodjek/vim-puppet'
-Plugin 'tpope/vim-markdown'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'wting/rust.vim'
-Plugin 'chase/vim-ansible-yaml'
-Plugin 'fatih/vim-go'
-Plugin 'slim-template/vim-slim'       " god willing I will never need this...
-Plugin 'digitaltoad/vim-pug'
-Plugin 'othree/xml.vim'
-Plugin 'posva/vim-vue'
-Plugin 'jeetsukumaran/vim-pythonsense'
-Plugin 'tpope/vim-fugitive'           " that good shit
+" treesitter
+Plugin 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" tpope
+Plugin 'tpope/vim-rails' " this does additional highlighting not covered by treesitter
+Plugin 'tpope/vim-fugitive'
 
 " interface
-Plugin 'scrooloose/nerdcommenter'     " syntax-specific commenting
-" Plugin 'tpope/vim-commentary'         " alternate commenting
+Plugin 'tpope/vim-commentary'         " alternate commenting
 
 Plugin 'tpope/vim-surround'           " parenthesis, brackets, tags, etc.
-Plugin 'ctrlpvim/ctrlp.vim'           " fuzzy file finder
 Plugin 'simnalamburt/vim-mundo'       " visual undo tree
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'folke/tokyonight.nvim'
 Plugin 'jacoborus/tender.vim'
+
+Plugin 'nvim-lua/plenary.nvim'        " telescope dependency
+Plugin 'nvim-telescope/telescope.nvim'
+Plugin 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}  " Faster sorting
 
 call vundle#end()
 
@@ -75,3 +64,52 @@ let NERDSpaceDelims = 1               " space after comment char
 
 """" Macros
 " source $VIMRUNTIME/macros/matchit.vim      " not on by default for some reason
+
+
+" treesitter config script
+" on a fresh install, you may need to run :TSInstall before this will function
+lua require('treesitter-config')
+
+" telescope config script
+lua require('treesitter-config')
+
+"""" Mappings
+" telescope
+nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+""" Shit I have changed recently and will not remember
+
+" full path of markdown file - needs to be placed manually
+" on a fresh install
+let g:cheat_sheet_path = '~/.config/nvim/cheatsheet.md'
+
+command! Cheat call s:OpenCheatSheet()
+
+function! s:OpenCheatSheet()
+  let cheat_file = expand(g:cheat_sheet_path)
+  let buf = nvim_create_buf(v:false, v:true)
+  let lines = readfile(cheat_file)
+  call nvim_buf_set_lines(buf, 0, -1, v:true, lines)
+  let width = 70
+  let height = min([len(lines) + 2, &lines - 10])
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'width': width,
+        \ 'height': height,
+        \ 'col': (&columns - width) / 2,
+        \ 'row': (&lines - height) / 2,
+        \ 'style': 'minimal',
+        \ 'border': 'rounded'
+        \ }
+  let win = nvim_open_win(buf, v:true, opts)
+  call nvim_buf_set_option(buf, 'modifiable', v:false)
+  call nvim_buf_set_option(buf, 'filetype', 'markdown')
+  nnoremap <buffer><silent> q :close<CR>
+  nnoremap <buffer><silent> <Esc> :close<CR>
+  execute 'nnoremap <buffer><silent> e :close<CR>:e ' . g:cheat_sheet_path . '<CR>'
+endfunction
+
+nnoremap <leader>? :Cheat<CR>
