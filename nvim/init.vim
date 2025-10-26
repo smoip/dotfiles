@@ -29,6 +29,17 @@ Plugin 'nvim-lua/plenary.nvim'        " telescope dependency
 Plugin 'nvim-telescope/telescope.nvim'
 Plugin 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}  " Faster sorting
 
+" LSP/Mason
+Plugin 'williamboman/mason.nvim'
+Plugin 'williamboman/mason-lspconfig.nvim'
+Plugin 'neovim/nvim-lspconfig'
+Plugin 'hrsh7th/nvim-cmp'           " Completion engine
+Plugin 'hrsh7th/cmp-nvim-lsp'       " LSP completion source
+Plugin 'hrsh7th/cmp-buffer'         " Buffer completion
+Plugin 'hrsh7th/cmp-path'           " Path completion
+Plugin 'L3MON4D3/LuaSnip'           " Snippet engine
+Plugin 'saadparwaiz1/cmp_luasnip'   " Snippet completion
+
 call vundle#end()
 
 syntax on                             " syntax highlighting
@@ -72,6 +83,9 @@ lua require('treesitter-config')
 
 " telescope config script
 lua require('treesitter-config')
+
+" LSP config script
+lua require('lsp-config')
 
 """" Mappings
 " telescope
